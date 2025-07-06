@@ -187,17 +187,62 @@
             border-radius: 0.5rem;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
+
+        /* --- MOBILE RESPONSIVENESS --- */
+        @media (max-width: 768px) {
+            h1.text-6xl {
+                font-size: 2.5rem; /* Reduced from 3.75rem */
+                line-height: 1.2;
+            }
+            h2.text-2xl {
+                font-size: 1.25rem; /* Reduced from 1.5rem */
+            }
+            .section {
+                padding: 4rem 1rem; /* Reduced padding */
+            }
+            .section-content {
+                max-width: 100%;
+            }
+            p.text-lg {
+                font-size: 1rem; /* Reduced from 1.125rem */
+            }
+            .quran-verse {
+                padding: 1rem;
+                font-size: 1.1rem;
+            }
+            .nav-dot {
+                right: 10px; /* Closer to the edge */
+                gap: 0.75rem; /* Smaller gap */
+            }
+            .dot {
+                width: 10px;
+                height: 10px;
+            }
+            .dot:hover .tooltip { /* Hide tooltips on mobile to prevent layout issues */
+                display: none;
+            }
+             .lang-switcher {
+                top: 10px;
+                left: 10px;
+            }
+            .lang-btn {
+                padding: 0.25rem 0.75rem;
+                font-size: 0.875rem;
+            }
+            /* Make grid layouts stack on mobile */
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <!-- Language Switcher -->
     <div class="lang-switcher flex">
         <button id="lang-en" class="lang-btn active">EN</button>
         <button id="lang-fr" class="lang-btn">FR</button>
     </div>
 
-    <!-- Navigation Dots -->
     <nav class="nav-dot">
         <a href="#g" class="dot active" data-section="g"><span class="tooltip" data-lang-key="tooltip_g">God's Existence</span></a>
         <a href="#o" class="dot" data-section="o"><span class="tooltip" data-lang-key="tooltip_o">Oneness</span></a>
@@ -211,7 +256,6 @@
         <a href="#glossary" class="dot" data-section="glossary"><span class="tooltip" data-lang-key="tooltip_glossary">Glossary</span></a>
     </nav>
 
-    <!-- G - God's Existence -->
     <section id="g" class="section bg-gray-100">
         <div class="bg-pattern"></div>
         <div class="section-content">
@@ -234,7 +278,6 @@
         </div>
     </section>
 
-    <!-- O - Oneness of God -->
     <section id="o" class="section bg-white">
         <div class="bg-pattern"></div>
         <div class="section-content">
@@ -257,7 +300,6 @@
         </div>
     </section>
 
-    <!-- R - Revelation -->
     <section id="r" class="section bg-gray-100">
         <div class="bg-pattern"></div>
         <div class="section-content">
@@ -280,7 +322,6 @@
         </div>
     </section>
 
-    <!-- A - And -->
     <section id="a" class="section bg-white">
         <div class="bg-pattern"></div>
         <div class="section-content">
@@ -303,7 +344,6 @@
         </div>
     </section>
 
-    <!-- P - Prophethood -->
     <section id="p" class="section bg-gray-100">
         <div class="bg-pattern"></div>
         <div class="section-content">
@@ -332,14 +372,12 @@
         </div>
     </section>
 
-    <!-- FAQ Section -->
     <section id="faq" class="section bg-white">
         <div class="section-content w-full">
             <h1 class="text-6xl font-bold text-cyan-700 mb-4" data-lang-key="faq_title">Common Questions</h1>
             <h2 class="text-2xl text-gray-600 mb-8" data-lang-key="faq_subtitle">Addressing Misconceptions</h2>
             <div id="faq-container" class="mt-8">
-                <!-- FAQ items will be dynamically inserted here -->
-            </div>
+                </div>
         </div>
         <div class="nav-arrows">
             <a href="#p" class="nav-arrow">↑</a>
@@ -347,7 +385,6 @@
         </div>
     </section>
 
-    <!-- Resources Section -->
     <section id="resources" class="section bg-gray-100">
         <div class="section-content">
             <h1 class="text-6xl font-bold text-gray-800 mb-4" data-lang-key="resources_title">More Resources</h1>
@@ -359,22 +396,22 @@
                 <div class="bg-white p-6 rounded-lg shadow-md">
                     <h3 class="font-bold text-xl mb-2 text-cyan-700">Quran.com</h3>
                     <p class="mb-4" data-lang-key="resources_d1">A beautiful and easy-to-use interface for reading, listening to, and studying the Quran, with multiple translations.</p>
-                    <a href="https://quran.com" target="_blank" class="font-bold text-cyan-600 hover:underline" data-lang-key="visit_website">Visit Website &rarr;</a>
+                    <a href="https://quran.com" target="_blank" class="font-bold text-cyan-600 hover:underline" data-lang-key="visit_website">Visit Website →</a>
                 </div>
                 <div class="bg-white p-6 rounded-lg shadow-md">
                     <h3 class="font-bold text-xl mb-2 text-cyan-700">iERA</h3>
                     <p class="mb-4" data-lang-key="resources_d2">An international organization dedicated to presenting a rational and compassionate case for Islam.</p>
-                    <a href="https://iera.org/" target="_blank" class="font-bold text-cyan-600 hover:underline" data-lang-key="visit_website">Visit Website &rarr;</a>
+                    <a href="https://iera.org/" target="_blank" class="font-bold text-cyan-600 hover:underline" data-lang-key="visit_website">Visit Website →</a>
                 </div>
                 <div class="bg-white p-6 rounded-lg shadow-md">
                     <h3 class="font-bold text-xl mb-2 text-cyan-700">Sunnah.com</h3>
                     <p class="mb-4" data-lang-key="resources_d3">The most comprehensive online collection of the Hadith (prophetic traditions), the second primary source of Islamic law.</p>
-                    <a href="https://sunnah.com" target="_blank" class="font-bold text-cyan-600 hover:underline" data-lang-key="visit_website">Visit Website &rarr;</a>
+                    <a href="https://sunnah.com" target="_blank" class="font-bold text-cyan-600 hover:underline" data-lang-key="visit_website">Visit Website →</a>
                 </div>
                 <div class="bg-white p-6 rounded-lg shadow-md">
                     <h3 class="font-bold text-xl mb-2 text-cyan-700">WhyIslam.org</h3>
                     <p class="mb-4" data-lang-key="resources_d4">A project of the Islamic Circle of North America, providing clear information for those curious about Islam.</p>
-                    <a href="https://www.whyislam.org" target="_blank" class="font-bold text-cyan-600 hover:underline" data-lang-key="visit_website">Visit Website &rarr;</a>
+                    <a href="https://www.whyislam.org" target="_blank" class="font-bold text-cyan-600 hover:underline" data-lang-key="visit_website">Visit Website →</a>
                 </div>
             </div>
         </div>
@@ -384,7 +421,6 @@
         </div>
     </section>
 
-    <!-- What's Next Section -->
     <section id="next-steps" class="section bg-white">
         <div class="section-content">
             <h1 class="text-6xl font-bold text-cyan-700 mb-4" data-lang-key="next_steps_title">What's Next?</h1>
@@ -396,12 +432,12 @@
                 <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
                     <h3 class="font-bold text-xl mb-2" data-lang-key="next_steps_h1">Read the Quran</h3>
                     <p class="mb-4" data-lang-key="next_steps_d1">Start reading a translation of the Quran to hear the message directly. Begin with short chapters like Al-Fatiha or Al-Ikhlas.</p>
-                    <a href="https://quran.com" target="_blank" class="font-bold text-cyan-600 hover:underline" data-lang-key="visit_website">Visit Website &rarr;</a>
+                    <a href="https://quran.com" target="_blank" class="font-bold text-cyan-600 hover:underline" data-lang-key="visit_website">Visit Website →</a>
                 </div>
                 <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
                     <h3 class="font-bold text-xl mb-2" data-lang-key="next_steps_h2">Visit a Mosque</h3>
                     <p class="mb-4" data-lang-key="next_steps_d2">Mosques are open to visitors. It's a great way to see the community and ask questions. Most have open days or welcome guests anytime.</p>
-                    <a href="https://www.google.com/maps/search/mosque/" target="_blank" class="font-bold text-cyan-600 hover:underline" data-lang-key="find_mosque">Find a Mosque &rarr;</a>
+                    <a href="https://www.google.com/maps/search/mosque/" target="_blank" class="font-bold text-cyan-600 hover:underline" data-lang-key="find_mosque">Find a Mosque →</a>
                 </div>
                 <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
                     <h3 class="font-bold text-xl mb-2" data-lang-key="next_steps_h4">Talk to a Muslim</h3>
@@ -415,7 +451,6 @@
         </div>
     </section>
 
-    <!-- Miracles Section -->
     <section id="miracles" class="section bg-gray-100">
         <div class="section-content">
             <h1 class="text-6xl font-bold text-gray-800 mb-4" data-lang-key="miracles_title">Miracles of the Quran</h1>
@@ -444,7 +479,6 @@
         </div>
     </section>
 
-    <!-- Glossary Section -->
     <section id="glossary" class="section bg-white">
         <div class="section-content">
             <h1 class="text-6xl font-bold text-cyan-700 mb-4" data-lang-key="glossary_title">Glossary</h1>
@@ -535,15 +569,15 @@
                     resources_d2: "An international organization dedicated to presenting a rational and compassionate case for Islam.",
                     resources_d3: "The most comprehensive online collection of the Hadith (prophetic traditions), the second primary source of Islamic law.",
                     resources_d4: "A project of the Islamic Circle of North America, providing clear information for those curious about Islam.",
-                    visit_website: "Visit Website &rarr;",
+                    visit_website: "Visit Website →",
                     // Next Steps
                     next_steps_title: "What's Next?", next_steps_subtitle: "Your Journey Continues Here",
                     next_steps_p1: "If this message resonates with you, here are some practical steps you can take to learn more and connect.",
                     next_steps_h1: "Read the Quran", next_steps_d1: "Start reading a translation of the Quran to hear the message directly. Begin with short chapters like Al-Fatiha or Al-Ikhlas.",
                     next_steps_h2: "Visit a Mosque", next_steps_d2: "Mosques are open to visitors. It's a great way to see the community and ask questions. Most have open days or welcome guests anytime.",
-                    find_mosque: "Find a Mosque &rarr;",
+                    find_mosque: "Find a Mosque →",
                     next_steps_h3: "Watch a Documentary", next_steps_d3: "Learn about the life of the man who brought this message. 'The Life of Prophet Muhammad' by BBC is a well-regarded starting point.",
-                    watch_now: "Watch Now &rarr;",
+                    watch_now: "Watch Now →",
                     next_steps_h4: "Talk to a Muslim", next_steps_d4: "Have a conversation. Ask questions. Hearing a personal perspective can be incredibly insightful. Use the resources above to connect.",
                     // Miracles
                     miracles_title: "Miracles of the Quran", miracles_subtitle: "Insights Ahead of Their Time",
@@ -611,15 +645,15 @@
                     resources_d2: "Une organisation internationale dédiée à présenter un argumentaire rationnel et compatissant pour l'Islam.",
                     resources_d3: "La collection en ligne la plus complète des Hadiths (traditions prophétiques), la deuxième source primaire de la loi islamique.",
                     resources_d4: "Un projet du Cercle Islamique d'Amérique du Nord, fournissant des informations claires pour ceux qui sont curieux de l'Islam.",
-                    visit_website: "Visiter le site &rarr;",
+                    visit_website: "Visiter le site →",
                     // Next Steps
                     next_steps_title: "Prochaines Étapes ?", next_steps_subtitle: "Votre Voyage Continue Ici",
                     next_steps_p1: "Si ce message résonne en vous, voici quelques étapes pratiques que vous pouvez suivre pour en savoir plus et vous connecter.",
                     next_steps_h1: "Lisez le Coran", next_steps_d1: "Commencez à lire une traduction du Coran pour entendre le message directement. Commencez par de courtes sourates comme Al-Fatiha ou Al-Ikhlas.",
                     next_steps_h2: "Visitez une Mosquée", next_steps_d2: "Les mosquées sont ouvertes aux visiteurs. C'est un excellent moyen de voir la communauté et de poser des questions. La plupart organisent des journées portes ouvertes ou accueillent les invités à tout moment.",
-                    find_mosque: "Trouver une mosquée &rarr;",
+                    find_mosque: "Trouver une mosquée →",
                     next_steps_h3: "Regardez un Documentaire", next_steps_d3: "Découvrez la vie de l'homme qui a apporté ce message. 'La Vie du Prophète Muhammad' par la BBC est un bon point de départ.",
-                    watch_now: "Regarder &rarr;",
+                    watch_now: "Regarder →",
                     next_steps_h4: "Parlez à un Musulman", next_steps_d4: "Ayez une conversation. Posez des questions. Entendre une perspective personnelle peut être incroyablement instructif. Utilisez les ressources ci-dessus pour vous connecter.",
                     // Miracles
                     miracles_title: "Miracles du Coran", miracles_subtitle: "Des Connaissances en Avance sur Leur Temps",
