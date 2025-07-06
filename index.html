@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The GORAP Method: A Path to Understanding</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+        h1, h2, h3 {
+            font-family: 'Lora', serif;
+        }
+        .section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5rem 2rem;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid #e9ecef;
+        }
+        .section-content {
+            max-width: 800px;
+            text-align: center;
+            animation: fadeIn 1.5s ease-in-out;
+            position: relative;
+            z-index: 10;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .quran-verse {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-size: 1.25rem;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            border-left: 4px solid #17a2b8;
+            background-color: #ffffff;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .nav-dot {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            z-index: 50;
+        }
+        .dot {
+            width: 12px;
+            height: 12px;
+            background-color: #adb5bd;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .dot.active {
+            background-color: #17a2b8;
+            transform: scale(1.5);
+        }
+        .dot .tooltip {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #343a40;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .dot:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+        .bg-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.05;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .nav-arrows {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+        }
+        .nav-arrow {
+            background-color: white;
+            color: #343a40;
+            border: 1px solid #dee2e6;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .nav-arrow:hover {
+            background-color: #17a2b8;
+            color: white;
+            transform: translateY(-2px);
+        }
+        .faq-item {
+            background: white;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            text-align: left;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .faq-question {
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faq-answer {
+            padding: 0 1.5rem 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+            line-height: 1.7;
+            border-top: 1px solid #e9ecef;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 1000px; /* Adjust as needed */
+            padding-top: 1.5rem;
+        }
+        .faq-item.active .faq-arrow {
+            transform: rotate(180deg);
+        }
+        .faq-arrow {
+            transition: transform 0.3s ease;
+        }
+        .lang-switcher {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 50;
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .lang-btn {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+        }
+        .lang-btn:hover {
+            background-color: #f1f3f5;
+        }
+        .lang-btn.active {
+            background-color: #17a2b8;
+            color: white;
+        }
+        .glossary-term {
+            background: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Language Switcher -->
+    <div class="lang-switcher flex">
+        <button id="lang-en" class="lang-btn active">EN</button>
+        <button id="lang-fr" class="lang-btn">FR</button>
+    </div>
+
+    <!-- Navigation Dots -->
+    <nav class="nav-dot">
+        <a href="#g" class="dot active" data-section="g"><span class="tooltip" data-lang-key="tooltip_g">God's Existence</span></a>
+        <a href="#o" class="dot" data-section="o"><span class="tooltip" data-lang-key="tooltip_o">Oneness</span></a>
+        <a href="#r" class="dot" data-section="r"><span class="tooltip" data-lang-key="tooltip_r">Revelation</span></a>
+        <a href="#a" class="dot" data-section="a"><span class="tooltip" data-lang-key="tooltip_a">And...</span></a>
+        <a href="#p" class="dot" data-section="p"><span class="tooltip" data-lang-key="tooltip_p">Prophethood</span></a>
+        <a href="#faq" class="dot" data-section="faq"><span class="tooltip" data-lang-key="tooltip_faq">FAQ</span></a>
+        <a href="#resources" class="dot" data-section="resources"><span class="tooltip" data-lang-key="tooltip_resources">Resources</span></a>
+        <a href="#next-steps" class="dot" data-section="next-steps"><span class="tooltip" data-lang-key="tooltip_next_steps">Next Steps</span></a>
+        <a href="#miracles" class="dot" data-section="miracles"><span class="tooltip" data-lang-key="tooltip_miracles">Miracles</span></a>
+        <a href="#glossary" class="dot" data-section="glossary"><span class="tooltip" data-lang-key="tooltip_glossary">Glossary</span></a>
+    </nav>
+
+    <!-- G - God's Existence -->
+    <section id="g" class="section bg-gray-100">
+        <div class="bg-pattern"></div>
+        <div class="section-content">
+            <h1 class="text-6xl font-bold text-gray-800 mb-4" data-lang-key="g_title">G: God's Existence</h1>
+            <h2 class="text-2xl text-gray-600 mb-8" data-lang-key="g_subtitle">The Argument from Design</h2>
+            <p class="text-lg leading-relaxed" data-lang-key="g_p1">
+                The GORAP method begins by reflecting on the world around us. Consider the intricate balance of the universe: the orbit of the planets, the complexity of a single cell, the miracle of consciousness. This order and complexity points to an intelligent designer. An explosion in a print shop doesn't create a dictionary; a tornado in a junkyard doesn't assemble an airplane. The universe, in its vastness and precision, logically points to a Creator.
+            </p>
+            <div class="quran-verse">
+                <p data-lang-key="g_quran_text">"Indeed, in the creation of the heavens and the earth and the alternation of the night and the day are signs for those of understanding."</p>
+                <p class="text-right mt-2 text-sm text-gray-500" data-lang-key="g_quran_ref">- Quran, Surah Al-Imran (3:190)</p>
+            </div>
+            <p class="text-lg leading-relaxed" data-lang-key="g_p2">
+                This Creator is not a passive force, but an active, purposeful one. The very existence of a universal moral compass—an innate sense of right and wrong found in all cultures—suggests a lawgiver who embedded these values within us.
+            </p>
+        </div>
+        <div class="nav-arrows">
+            <a href="#glossary" class="nav-arrow hidden">↑</a>
+            <a href="#o" class="nav-arrow">↓</a>
+        </div>
+    </section>
+
+    <!-- O - Oneness of God -->
+    <section id="o" class="section bg-white">
+        <div class="bg-pattern"></div>
+        <div class="section-content">
+            <h1 class="text-6xl font-bold text-cyan-700 mb-4" data-lang-key="o_title">O: Oneness of God</h1>
+            <h2 class="text-2xl text-gray-600 mb-8" data-lang-key="o_subtitle">Tawhid: The Core of Faith</h2>
+            <p class="text-lg leading-relaxed" data-lang-key="o_p1">
+                If we accept the existence of a Creator, the next logical question is: what is the nature of this Creator? Islam's primary message is Tawhid, the absolute Oneness of God. This means God is unique, indivisible, and without any partners, equals, or offspring. If there were multiple gods, they would likely conflict, leading to chaos in the universe. The perfect harmony we observe suggests a single, unified will.
+            </p>
+            <div class="quran-verse">
+                <p data-lang-key="o_quran_text">"Say, 'He is Allah, the One and Only; Allah, the Eternal, Absolute; He begets not, nor is He begotten; And there is none like unto Him.'"</p>
+                <p class="text-right mt-2 text-sm text-gray-500" data-lang-key="o_quran_ref">- Quran, Surah Al-Ikhlas (112:1-4)</p>
+            </div>
+            <p class="text-lg leading-relaxed" data-lang-key="o_p2">
+                This concept simplifies our purpose. We worship and direct our devotion to the one source of all creation, freeing ourselves from servitude to anything else—be it wealth, status, or other people. It is a message of ultimate liberation.
+            </p>
+        </div>
+        <div class="nav-arrows">
+            <a href="#g" class="nav-arrow">↑</a>
+            <a href="#r" class="nav-arrow">↓</a>
+        </div>
+    </section>
+
+    <!-- R - Revelation -->
+    <section id="r" class="section bg-gray-100">
+        <div class="bg-pattern"></div>
+        <div class="section-content">
+            <h1 class="text-6xl font-bold text-gray-800 mb-4" data-lang-key="r_title">R: Revelation</h1>
+            <h2 class="text-2xl text-gray-600 mb-8" data-lang-key="r_subtitle">Guidance for Humanity</h2>
+            <p class="text-lg leading-relaxed" data-lang-key="r_p1">
+                A wise and merciful Creator would not leave humanity to guess its purpose. Just as a manufacturer provides a manual for its product, God provided guidance for His creation. This guidance comes through revelation—a direct communication from God to humanity. Throughout history, God sent messages to guide people back to the path of worshipping Him alone and living righteous lives.
+            </p>
+            <div class="quran-verse">
+                <p data-lang-key="r_quran_text">"This is the Book about which there is no doubt, a guidance for those conscious of Allah."</p>
+                <p class="text-right mt-2 text-sm text-gray-500" data-lang-key="r_quran_ref">- Quran, Surah Al-Baqarah (2:2)</p>
+            </div>
+            <p class="text-lg leading-relaxed" data-lang-key="r_p2">
+                The Quran is presented as the final, preserved revelation to all of humanity. It claims to be the literal word of God, and its preservation over 1400 years, its scientific insights, and its profound impact on civilization are presented as evidence of its divine origin. It is a manual for life, addressing our spiritual, social, and personal needs.
+            </p>
+        </div>
+        <div class="nav-arrows">
+            <a href="#o" class="nav-arrow">↑</a>
+            <a href="#a" class="nav-arrow">↓</a>
+        </div>
+    </section>
+
+    <!-- A - And -->
+    <section id="a" class="section bg-white">
+        <div class="bg-pattern"></div>
+        <div class="section-content">
+            <h1 class="text-6xl font-bold text-cyan-700 mb-4" data-lang-key="a_title">A: And...</h1>
+            <h2 class="text-2xl text-gray-600 mb-8" data-lang-key="a_subtitle">Connecting the Message to the Messenger</h2>
+            <p class="text-lg leading-relaxed" data-lang-key="a_p1">
+                This step is a crucial bridge. If God sent a message, how was it delivered? A message requires a messenger. This divine guidance wasn't sent down as a book falling from the sky. It was entrusted to a human being who could live it, teach it, and be a practical example for others to follow.
+            </p>
+            <div class="quran-verse">
+                <p data-lang-key="a_quran_text">"Allah has been truly gracious to the believers in sending them a messenger from among their own, to recite His revelations to them, to purify them, and to teach them the Book and wisdom, even though before this they were in manifest error."</p>
+                <p class="text-right mt-2 text-sm text-gray-500" data-lang-key="a_quran_ref">- Quran, Surah Al-Imran (3:164)</p>
+            </div>
+            <p class="text-lg leading-relaxed" data-lang-key="a_p2">
+                The messenger serves as the link, ensuring the revelation is understood and implemented correctly.
+            </p>
+        </div>
+        <div class="nav-arrows">
+            <a href="#r" class="nav-arrow">↑</a>
+            <a href="#p" class="nav-arrow">↓</a>
+        </div>
+    </section>
+
+    <!-- P - Prophethood -->
+    <section id="p" class="section bg-gray-100">
+        <div class="bg-pattern"></div>
+        <div class="section-content">
+            <h1 class="text-6xl font-bold text-gray-800 mb-4" data-lang-key="p_title">P: Prophethood</h1>
+            <h2 class="text-2xl text-gray-600 mb-8" data-lang-key="p_subtitle">The Final Messenger, Muhammad (ﷺ)</h2>
+            <p class="text-lg leading-relaxed" data-lang-key="p_p1">
+                The final stage introduces the concept of Prophethood and specifically, the role of Muhammad (peace and blessings be upon him). Muslims believe that God sent prophets to every nation, including Adam, Noah, Abraham, Moses, and Jesus, all with the same core message of Tawhid. Muhammad (ﷺ) is considered the final prophet, sent to confirm the previous messages and deliver the final, universal revelation for all of humanity.
+            </p>
+            <div class="quran-verse">
+                <p data-lang-key="p_quran_text">"Muhammad is not the father of any of your men, but he is the Messenger of Allah and the seal of the prophets. And ever is Allah, of all things, Knowing."</p>
+                <p class="text-right mt-2 text-sm text-gray-500" data-lang-key="p_quran_ref">- Quran, Surah Al-Ahzab (33:40)</p>
+            </div>
+            <p class="text-lg leading-relaxed" data-lang-key="p_p2">
+                His life is seen as the ultimate embodiment of the Quranic teachings. His character, leadership, and the transformative society he established are presented as proof of his authenticity. To accept the message (the Quran), one must logically accept the credibility of the messenger who brought it.
+            </p>
+             <div class="mt-12">
+                <h3 class="text-3xl font-bold text-gray-700 mb-4" data-lang-key="p_summary_title">The Complete Path</h3>
+                <p class="text-lg leading-relaxed max-w-2xl mx-auto" data-lang-key="p_summary_text">
+                    The GORAP method presents a logical progression: The universe points to a <span class="font-bold text-cyan-700">G</span>od. Logic dictates His <span class="font-bold text-cyan-700">O</span>neness. His mercy necessitates <span class="font-bold text-cyan-700">R</span>evelation. <span class="font-bold text-cyan-700">A</span>nd that revelation requires a messenger, leading to the finality of <span class="font-bold text-cyan-700">P</span>rophethood.
+                </p>
+            </div>
+        </div>
+        <div class="nav-arrows">
+            <a href="#a" class="nav-arrow">↑</a>
+            <a href="#faq" class="nav-arrow">↓</a>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="section bg-white">
+        <div class="section-content w-full">
+            <h1 class="text-6xl font-bold text-cyan-700 mb-4" data-lang-key="faq_title">Common Questions</h1>
+            <h2 class="text-2xl text-gray-600 mb-8" data-lang-key="faq_subtitle">Addressing Misconceptions</h2>
+            <div id="faq-container" class="mt-8">
+                <!-- FAQ items will be dynamically inserted here -->
+            </div>
+        </div>
+        <div class="nav-arrows">
+            <a href="#p" class="nav-arrow">↑</a>
+            <a href="#resources" class="nav-arrow">↓</a>
+        </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section id="resources" class="section bg-gray-100">
+        <div class="section-content">
+            <h1 class="text-6xl font-bold text-gray-800 mb-4" data-lang-key="resources_title">More Resources</h1>
+            <h2 class="text-2xl text-gray-600 mb-8" data-lang-key="resources_subtitle">Continue Your Journey</h2>
+            <p class="text-lg leading-relaxed mb-8" data-lang-key="resources_p1">
+                Learning is a lifelong journey. Here are some trusted and authentic resources to deepen your understanding of Islam.
+            </p>
+            <div class="grid md:grid-cols-2 gap-8 text-left">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-xl mb-2 text-cyan-700">Quran.com</h3>
+                    <p class="mb-4" data-lang-key="resources_d1">A beautiful and easy-to-use interface for reading, listening to, and studying the Quran, with multiple translations.</p>
+                    <a href="https://quran.com" target="_blank" class="font-bold text-cyan-600 hover:underline" data-lang-key="visit_website">Visit Website &rarr;</a>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-xl mb-2 text-cyan-700">iERA</h3>
+                    <p class="mb-4" data-lang-key="resources_d2">An international organization dedicated to presenting a rational and compassionate case for Islam.</p>
+                    <a href="https://iera.org/" target="_blank" class="font-bold text-cyan-600 hover:underline" data-lang-key="visit_website">Visit Website &rarr;</a>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-xl mb-2 text-cyan-700">Sunnah.com</h3>
+                    <p class="mb-4" data-lang-key="resources_d3">The most comprehensive online collection of the Hadith (prophetic traditions), the second primary source of Islamic law.</p>
+                    <a href="https://sunnah.com" target="_blank" class="font-bold text-cyan-600 hover:underline" data-lang-key="visit_website">Visit Website &rarr;</a>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-xl mb-2 text-cyan-700">WhyIslam.org</h3>
+                    <p class="mb-4" data-lang-key="resources_d4">A project of the Islamic Circle of North America, providing clear information for those curious about Islam.</p>
+                    <a href="https://www.whyislam.org" target="_blank" class="font-bold text-cyan-600 hover:underline" data-lang-key="visit_website">Visit Website &rarr;</a>
+                </div>
+            </div>
+        </div>
+        <div class="nav-arrows">
+            <a href="#faq" class="nav-arrow">↑</a>
+            <a href="#next-steps" class="nav-arrow">↓</a>
+        </div>
+    </section>
+
+    <!-- What's Next Section -->
+    <section id="next-steps" class="section bg-white">
+        <div class="section-content">
+            <h1 class="text-6xl font-bold text-cyan-700 mb-4" data-lang-key="next_steps_title">What's Next?</h1>
+            <h2 class="text-2xl text-gray-600 mb-8" data-lang-key="next_steps_subtitle">Your Journey Continues Here</h2>
+            <p class="text-lg leading-relaxed mb-8" data-lang-key="next_steps_p1">
+                If this message resonates with you, here are some practical steps you can take to learn more and connect.
+            </p>
+            <div class="grid md:grid-cols-2 gap-8 text-left">
+                <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                    <h3 class="font-bold text-xl mb-2" data-lang-key="next_steps_h1">Read the Quran</h3>
+                    <p class="mb-4" data-lang-key="next_steps_d1">Start reading a translation of the Quran to hear the message directly. Begin with short chapters like Al-Fatiha or Al-Ikhlas.</p>
+                    <a href="https://quran.com" target="_blank" class="font-bold text-cyan-600 hover:underline" data-lang-key="visit_website">Visit Website &rarr;</a>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                    <h3 class="font-bold text-xl mb-2" data-lang-key="next_steps_h2">Visit a Mosque</h3>
+                    <p class="mb-4" data-lang-key="next_steps_d2">Mosques are open to visitors. It's a great way to see the community and ask questions. Most have open days or welcome guests anytime.</p>
+                    <a href="https://muslimdirectory.com/find-a-mosque" target="_blank" class="font-bold text-cyan-600 hover:underline" data-lang-key="find_mosque">Find a Mosque &rarr;</a>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                    <h3 class="font-bold text-xl mb-2" data-lang-key="next_steps_h3">Watch a Documentary</h3>
+                    <p class="mb-4" data-lang-key="next_steps_d3">Learn about the life of the man who brought this message. "The Life of Prophet Muhammad" by BBC is a well-regarded starting point.</p>
+                    <a href="https://www.youtube.com/watch?v=gq2S7q72-pA" target="_blank" class="font-bold text-cyan-600 hover:underline" data-lang-key="watch_now">Watch Now &rarr;</a>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                    <h3 class="font-bold text-xl mb-2" data-lang-key="next_steps_h4">Talk to a Muslim</h3>
+                    <p class="mb-4" data-lang-key="next_steps_d4">Have a conversation. Ask questions. Hearing a personal perspective can be incredibly insightful. Use the resources above to connect.</p>
+                </div>
+            </div>
+        </div>
+        <div class="nav-arrows">
+            <a href="#resources" class="nav-arrow">↑</a>
+            <a href="#miracles" class="nav-arrow">↓</a>
+        </div>
+    </section>
+
+    <!-- Miracles Section -->
+    <section id="miracles" class="section bg-gray-100">
+        <div class="section-content">
+            <h1 class="text-6xl font-bold text-gray-800 mb-4" data-lang-key="miracles_title">Miracles of the Quran</h1>
+            <h2 class="text-2xl text-gray-600 mb-8" data-lang-key="miracles_subtitle">Insights Ahead of Their Time</h2>
+            <p class="text-lg leading-relaxed mb-8" data-lang-key="miracles_p1">
+                The Quran, revealed over 1400 years ago to an unlettered Prophet (ﷺ) in the desert, contains knowledge that science has only recently confirmed. This is considered by Muslims to be a sign of its divine origin.
+            </p>
+            <div class="grid md:grid-cols-3 gap-8 text-left">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-xl mb-2 text-cyan-700" data-lang-key="miracles_h1">Embryology</h3>
+                    <p data-lang-key="miracles_d1">The Quran (23:14) describes the stages of human development in the womb, from a "clinging clot" (`alaqah`) to the formation of bones and flesh, with a precision that was impossible to know without modern microscopy.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-xl mb-2 text-cyan-700" data-lang-key="miracles_h2">Expanding Universe</h3>
+                    <p data-lang-key="miracles_d2">The Quran (51:47) states, "And the heaven We constructed with strength, and indeed, We are [its] expanders." The concept of an expanding universe was only proposed and confirmed by scientists in the 20th century.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-bold text-xl mb-2 text-cyan-700" data-lang-key="miracles_h3">The Water Cycle</h3>
+                    <p data-lang-key="miracles_d3">Multiple verses accurately describe the water cycle—evaporation, cloud formation, and precipitation—at a time when prevailing theories were based on superstition and myth.</p>
+                </div>
+            </div>
+        </div>
+        <div class="nav-arrows">
+            <a href="#next-steps" class="nav-arrow">↑</a>
+            <a href="#glossary" class="nav-arrow">↓</a>
+        </div>
+    </section>
+
+    <!-- Glossary Section -->
+    <section id="glossary" class="section bg-white">
+        <div class="section-content">
+            <h1 class="text-6xl font-bold text-cyan-700 mb-4" data-lang-key="glossary_title">Glossary</h1>
+            <h2 class="text-2xl text-gray-600 mb-8" data-lang-key="glossary_subtitle">Understanding Key Terms</h2>
+            <div class="grid md:grid-cols-2 gap-6 text-left">
+                <div class="glossary-term">
+                    <h3 class="font-bold text-xl" data-lang-key="glossary_h1">Tawhid</h3>
+                    <p data-lang-key="glossary_d1">The core concept of Islam: the absolute Oneness and Uniqueness of God.</p>
+                </div>
+                <div class="glossary-term">
+                    <h3 class="font-bold text-xl" data-lang-key="glossary_h2">Sunnah</h3>
+                    <p data-lang-key="glossary_d2">The teachings, practices, and living example of the Prophet Muhammad (ﷺ).</p>
+                </div>
+                <div class="glossary-term">
+                    <h3 class="font-bold text-xl" data-lang-key="glossary_h3">Hadith</h3>
+                    <p data-lang-key="glossary_d3">The recorded narrations of the Prophet Muhammad's (ﷺ) sayings, actions, and approvals. They are a primary source for understanding the Sunnah.</p>
+                </div>
+                <div class="glossary-term">
+                    <h3 class="font-bold text-xl" data-lang-key="glossary_h4">Jihad</h3>
+                    <p data-lang-key="glossary_d4">Literally 'to struggle'. The primary meaning is the internal struggle to be a better person. It is not 'holy war'.</p>
+                </div>
+                <div class="glossary-term">
+                    <h3 class="font-bold text-xl" data-lang-key="glossary_h5">ﷺ</h3>
+                    <p data-lang-key="glossary_d5">An abbreviation for "Sallallahu 'alayhi wa sallam," which means "May the peace and blessings of Allah be upon him." A phrase of respect said after mentioning Prophet Muhammad.</p>
+                </div>
+            </div>
+        </div>
+        <div class="nav-arrows">
+            <a href="#miracles" class="nav-arrow">↑</a>
+            <a href="#g" class="nav-arrow">↑</a>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- TRANSLATION DATA ---
+            const translations = {
+                en: {
+                    // Tooltips
+                    tooltip_g: "God's Existence", tooltip_o: "Oneness", tooltip_r: "Revelation", tooltip_a: "And...", tooltip_p: "Prophethood", tooltip_faq: "FAQ", tooltip_resources: "Resources", tooltip_next_steps: "Next Steps", tooltip_miracles: "Miracles", tooltip_glossary: "Glossary",
+                    // Section G
+                    g_title: "G: God's Existence", g_subtitle: "The Argument from Design",
+                    g_p1: "The GORAP method begins by reflecting on the world around us. Consider the intricate balance of the universe: the orbit of the planets, the complexity of a single cell, the miracle of consciousness. This order and complexity points to an intelligent designer. An explosion in a print shop doesn't create a dictionary; a tornado in a junkyard doesn't assemble an airplane. The universe, in its vastness and precision, logically points to a Creator.",
+                    g_quran_text: "Indeed, in the creation of the heavens and the earth and the alternation of the night and the day are signs for those of understanding.",
+                    g_quran_ref: "- Quran, Surah Al-Imran (3:190)",
+                    g_p2: "This Creator is not a passive force, but an active, purposeful one. The very existence of a universal moral compass—an innate sense of right and wrong found in all cultures—suggests a lawgiver who embedded these values within us.",
+                    // Section O
+                    o_title: "O: Oneness of God", o_subtitle: "Tawhid: The Core of Faith",
+                    o_p1: "If we accept the existence of a Creator, the next logical question is: what is the nature of this Creator? Islam's primary message is Tawhid, the absolute Oneness of God. This means God is unique, indivisible, and without any partners, equals, or offspring. If there were multiple gods, they would likely conflict, leading to chaos in the universe. The perfect harmony we observe suggests a single, unified will.",
+                    o_quran_text: "Say, 'He is Allah, the One and Only; Allah, the Eternal, Absolute; He begets not, nor is He begotten; And there is none like unto Him.'",
+                    o_quran_ref: "- Quran, Surah Al-Ikhlas (112:1-4)",
+                    o_p2: "This concept simplifies our purpose. We worship and direct our devotion to the one source of all creation, freeing ourselves from servitude to anything else—be it wealth, status, or other people. It is a message of ultimate liberation.",
+                    // Section R
+                    r_title: "R: Revelation", r_subtitle: "Guidance for Humanity",
+                    r_p1: "A wise and merciful Creator would not leave humanity to guess its purpose. Just as a manufacturer provides a manual for its product, God provided guidance for His creation. This guidance comes through revelation—a direct communication from God to humanity. Throughout history, God sent messages to guide people back to the path of worshipping Him alone and living righteous lives.",
+                    r_quran_text: "This is the Book about which there is no doubt, a guidance for those conscious of Allah.",
+                    r_quran_ref: "- Quran, Surah Al-Baqarah (2:2)",
+                    r_p2: "The Quran is presented as the final, preserved revelation to all of humanity. It claims to be the literal word of God, and its preservation over 1400 years, its scientific insights, and its profound impact on civilization are presented as evidence of its divine origin. It is a manual for life, addressing our spiritual, social, and personal needs.",
+                    // Section A
+                    a_title: "A: And...", a_subtitle: "Connecting the Message to the Messenger",
+                    a_p1: "This step is a crucial bridge. If God sent a message, how was it delivered? A message requires a messenger. This divine guidance wasn't sent down as a book falling from the sky. It was entrusted to a human being who could live it, teach it, and be a practical example for others to follow.",
+                    a_quran_text: "Allah has been truly gracious to the believers in sending them a messenger from among their own, to recite His revelations to them, to purify them, and to teach them the Book and wisdom, even though before this they were in manifest error.",
+                    a_quran_ref: "- Quran, Surah Al-Imran (3:164)",
+                    a_p2: "The messenger serves as the link, ensuring the revelation is understood and implemented correctly.",
+                    // Section P
+                    p_title: "P: Prophethood", p_subtitle: "The Final Messenger, Muhammad (ﷺ)",
+                    p_p1: "The final stage introduces the concept of Prophethood and specifically, the role of Muhammad (peace and blessings be upon him). Muslims believe that God sent prophets to every nation, including Adam, Noah, Abraham, Moses, and Jesus, all with the same core message of Tawhid. Muhammad (ﷺ) is considered the final prophet, sent to confirm the previous messages and deliver the final, universal revelation for all of humanity.",
+                    p_quran_text: "Muhammad is not the father of any of your men, but he is the Messenger of Allah and the seal of the prophets. And ever is Allah, of all things, Knowing.",
+                    p_quran_ref: "- Quran, Surah Al-Ahzab (33:40)",
+                    p_p2: "His life is seen as the ultimate embodiment of the Quranic teachings. His character, leadership, and the transformative society he established are presented as proof of his authenticity. To accept the message (the Quran), one must logically accept the credibility of the messenger who brought it.",
+                    p_summary_title: "The Complete Path",
+                    p_summary_text: "The GORAP method presents a logical progression: The universe points to a <span class=\"font-bold text-cyan-700\">G</span>od. Logic dictates His <span class=\"font-bold text-cyan-700\">O</span>neness. His mercy necessitates <span class=\"font-bold text-cyan-700\">R</span>evelation. <span class=\"font-bold text-cyan-700\">A</span>nd that revelation requires a messenger, leading to the finality of <span class=\"font-bold text-cyan-700\">P</span>rophethood.",
+                    // FAQ
+                    faq_title: "Common Questions", faq_subtitle: "Addressing Misconceptions",
+                    faq_q1: "Does Islam command killing 'infidels'?",
+                    faq_a1: "This is a severe misinterpretation. Verses in the Quran that mention fighting are almost always in the context of self-defense against aggression, persecution, or betrayal of treaties. The Quran explicitly forbids starting hostilities: 'Fight in the way of Allah those who fight you, but do not transgress. Indeed. Allah does not like transgressors' (2:190). Furthermore, it guarantees freedom of belief: 'There shall be no compulsion in [acceptance of] the religion' (2:256). The general rule is peace, justice, and respectful coexistence. The historical context of these verses is crucial and cannot be ignored.",
+                    faq_q2: "What about the Prophet Muhammad's (ﷺ) marriage to Aisha?",
+                    faq_a2: "This must be understood in its historical and cultural context, not through a 21st-century lens. Historical sources indicate Aisha (may Allah be pleased with her) was betrothed at a young age, a common practice for political and social alliances in that era across many cultures. However, the marriage was only consummated when she reached physical and emotional maturity, as indicated by both historical accounts and Islamic law, which makes puberty and readiness for marriage the criteria, not just a number. Aisha was known for her sharp intellect, strong personality, and became one of the most important scholars of Islam, teaching thousands of men and women after the Prophet's death. Her marriage was successful and loving, and she never expressed any objection to it.",
+                    faq_q3: "What is the real meaning of 'Jihad'?",
+                    faq_a3: "'Jihad' literally means 'to struggle' or 'to strive'. It is a broad concept with many levels. The 'greater Jihad' is the internal, personal struggle to be a better person—to overcome one's ego, greed, and anger, and to live a righteous life. The 'lesser Jihad' refers to external struggle, which can include things like striving to build a just society or, in very specific and restricted circumstances, a physical, armed struggle for self-defense. It is not 'holy war' and is governed by very strict rules, including the prohibition of harming civilians, destroying property, or forcing conversion.",
+                    faq_q4: "How does Islam treat women?",
+                    faq_a4: "Islam elevated the status of women drastically at the time of its revelation, granting them rights they did not have, such as the right to inherit, to own property, to consent to marriage, and to seek divorce. The Quran addresses men and women as spiritual equals, with the same duties and the same rewards from God. While some cultural practices in Muslim-majority countries may oppress women, these often contradict the true teachings of Islam. The hijab (headscarf) is seen by many Muslim women as a personal choice of devotion and a liberation from societal pressures to conform to specific beauty standards.",
+                    // Resources
+                    resources_title: "More Resources", resources_subtitle: "Continue Your Journey",
+                    resources_p1: "Learning is a lifelong journey. Here are some trusted and authentic resources to deepen your understanding of Islam.",
+                    resources_d1: "A beautiful and easy-to-use interface for reading, listening to, and studying the Quran, with multiple translations.",
+                    resources_d2: "An international organization dedicated to presenting a rational and compassionate case for Islam.",
+                    resources_d3: "The most comprehensive online collection of the Hadith (prophetic traditions), the second primary source of Islamic law.",
+                    resources_d4: "A project of the Islamic Circle of North America, providing clear information for those curious about Islam.",
+                    visit_website: "Visit Website &rarr;",
+                    // Next Steps
+                    next_steps_title: "What's Next?", next_steps_subtitle: "Your Journey Continues Here",
+                    next_steps_p1: "If this message resonates with you, here are some practical steps you can take to learn more and connect.",
+                    next_steps_h1: "Read the Quran", next_steps_d1: "Start reading a translation of the Quran to hear the message directly. Begin with short chapters like Al-Fatiha or Al-Ikhlas.",
+                    next_steps_h2: "Visit a Mosque", next_steps_d2: "Mosques are open to visitors. It's a great way to see the community and ask questions. Most have open days or welcome guests anytime.",
+                    find_mosque: "Find a Mosque &rarr;",
+                    next_steps_h3: "Watch a Documentary", next_steps_d3: "Learn about the life of the man who brought this message. 'The Life of Prophet Muhammad' by BBC is a well-regarded starting point.",
+                    watch_now: "Watch Now &rarr;",
+                    next_steps_h4: "Talk to a Muslim", next_steps_d4: "Have a conversation. Ask questions. Hearing a personal perspective can be incredibly insightful. Use the resources above to connect.",
+                    // Miracles
+                    miracles_title: "Miracles of the Quran", miracles_subtitle: "Insights Ahead of Their Time",
+                    miracles_p1: "The Quran, revealed over 1400 years ago to an unlettered Prophet (ﷺ) in the desert, contains knowledge that science has only recently confirmed. This is considered by Muslims to be a sign of its divine origin.",
+                    miracles_h1: "Embryology", miracles_d1: "The Quran (23:14) describes the stages of human development in the womb, from a 'clinging clot' (`alaqah`) to the formation of bones and flesh, with a precision that was impossible to know without modern microscopy.",
+                    miracles_h2: "Expanding Universe", miracles_d2: "The Quran (51:47) states, 'And the heaven We constructed with strength, and indeed, We are [its] expanders.' The concept of an expanding universe was only proposed and confirmed by scientists in the 20th century.",
+                    miracles_h3: "The Water Cycle", miracles_d3: "Multiple verses accurately describe the water cycle—evaporation, cloud formation, and precipitation—at a time when prevailing theories were based on superstition and myth.",
+                    // Glossary
+                    glossary_title: "Glossary", glossary_subtitle: "Understanding Key Terms",
+                    glossary_h1: "Tawhid", glossary_d1: "The core concept of Islam: the absolute Oneness and Uniqueness of God.",
+                    glossary_h2: "Sunnah", glossary_d2: "The teachings, practices, and living example of the Prophet Muhammad (ﷺ).",
+                    glossary_h3: "Hadith", glossary_d3: "The recorded narrations of the Prophet Muhammad's (ﷺ) sayings, actions, and approvals. They are a primary source for understanding the Sunnah.",
+                    glossary_h4: "Jihad", glossary_d4: "Literally 'to struggle'. The primary meaning is the internal struggle to be a better person. It is not 'holy war'.",
+                    glossary_h5: "ﷺ", glossary_d5: "An abbreviation for \"Sallallahu 'alayhi wa sallam,\" which means \"May the peace and blessings of Allah be upon him.\" A phrase of respect said after mentioning Prophet Muhammad.",
+                },
+                fr: {
+                    // Tooltips
+                    tooltip_g: "Existence de Dieu", tooltip_o: "Unicité", tooltip_r: "Révélation", tooltip_a: "Et...", tooltip_p: "Prophétie", tooltip_faq: "FAQ", tooltip_resources: "Ressources", tooltip_next_steps: "Prochaines Étapes", tooltip_miracles: "Miracles", tooltip_glossary: "Glossaire",
+                    // Section G
+                    g_title: "G: Existence de Dieu", g_subtitle: "L'Argument de la Conception",
+                    g_p1: "La méthode GORAP commence par une réflexion sur le monde qui nous entoure. Considérez l'équilibre complexe de l'univers : l'orbite des planètes, la complexité d'une seule cellule, le miracle de la conscience. Cet ordre et cette complexité indiquent un concepteur intelligent. Une explosion dans une imprimerie ne crée pas un dictionnaire ; une tornade dans une décharge n'assemble pas un avion. L'univers, dans son immensité et sa précision, pointe logiquement vers un Créateur.",
+                    g_quran_text: "Certes, dans la création des cieux et de la terre, et dans l'alternance de la nuit et du jour, il y a des signes pour les doués d'intelligence.",
+                    g_quran_ref: "- Coran, Sourate Al-Imran (3:190)",
+                    g_p2: "Ce Créateur n'est pas une force passive, mais une force active et déterminée. L'existence même d'une boussole morale universelle — un sens inné du bien et du mal que l'on retrouve dans toutes les cultures — suggère un législateur qui a ancré ces valeurs en nous.",
+                    // Section O
+                    o_title: "O: Unicité de Dieu", o_subtitle: "Tawhid : Le Cœur de la Foi",
+                    o_p1: "Si nous acceptons l'existence d'un Créateur, la question logique suivante est : quelle est la nature de ce Créateur ? Le message principal de l'Islam est le Tawhid, l'Unicité absolue de Dieu. Cela signifie que Dieu est unique, indivisible, et sans partenaires, égaux ou descendants. S'il y avait plusieurs dieux, ils entreraient probablement en conflit, menant au chaos dans l'univers. L'harmonie parfaite que nous observons suggère une volonté unique et unifiée.",
+                    o_quran_text: "Dis : 'Il est Allah, Unique. Allah, Le Seul à être imploré pour ce que nous désirons. Il n'a jamais engendré, n'a pas été engendré non plus. Et nul n'est égal à Lui.'",
+                    o_quran_ref: "- Coran, Sourate Al-Ikhlas (112:1-4)",
+                    o_p2: "Ce concept simplifie notre but. Nous adorons et dirigeons notre dévotion vers la source unique de toute la création, nous libérant de la servitude à toute autre chose, que ce soit la richesse, le statut ou d'autres personnes. C'est un message de libération ultime.",
+                    // Section R
+                    r_title: "R: Révélation", r_subtitle: "Une Guidance pour l'Humanité",
+                    r_p1: "Un Créateur sage et miséricordieux ne laisserait pas l'humanité deviner son but. Tout comme un fabricant fournit un manuel pour son produit, Dieu a fourni une guidance pour Sa création. Cette guidance vient par la révélation — une communication directe de Dieu à l'humanité. À travers l'histoire, Dieu a envoyé des messages pour guider les gens sur le chemin de l'adoration de Lui seul et d'une vie juste.",
+                    r_quran_text: "C'est le Livre au sujet duquel il n'y a aucun doute, c'est un guide pour les pieux.",
+                    r_quran_ref: "- Coran, Sourate Al-Baqarah (2:2)",
+                    r_p2: "Le Coran est présenté comme la révélation finale et préservée pour toute l'humanité. Il prétend être la parole littérale de Dieu, et sa préservation depuis plus de 1400 ans, ses aperçus scientifiques et son impact profond sur la civilisation sont présentés comme des preuves de son origine divine. C'est un manuel de vie, répondant à nos besoins spirituels, sociaux et personnels.",
+                    // Section A
+                    a_title: "A: Et...", a_subtitle: "Connecter le Message au Messager",
+                    a_p1: "Cette étape est un pont crucial. Si Dieu a envoyé un message, comment a-t-il été délivré ? Un message nécessite un messager. Cette guidance divine n'a pas été envoyée comme un livre tombant du ciel. Elle a été confiée à un être humain qui pouvait la vivre, l'enseigner et être un exemple pratique à suivre pour les autres.",
+                    a_quran_text: "Allah a très certainement fait une faveur aux croyants lorsqu'Il a envoyé chez eux un messager de parmi eux-mêmes, qui leur récite Ses versets, les purifie et leur enseigne le Livre et la Sagesse, bien qu'ils fussent auparavant dans un égarement évident.",
+                    a_quran_ref: "- Coran, Sourate Al-Imran (3:164)",
+                    a_p2: "Le messager sert de lien, garantissant que la révélation est comprise et mise en œuvre correctement.",
+                    // Section P
+                    p_title: "P: Prophétie", p_subtitle: "Le Dernier Messager, Muhammad (ﷺ)",
+                    p_p1: "La dernière étape introduit le concept de la Prophétie et spécifiquement, le rôle de Muhammad (paix et bénédictions sur lui). Les musulmans croient que Dieu a envoyé des prophètes à chaque nation, y compris Adam, Noé, Abraham, Moïse et Jésus, tous avec le même message central du Tawhid. Muhammad (ﷺ) est considéré comme le dernier prophète, envoyé pour confirmer les messages précédents et délivrer la révélation finale et universelle pour toute l'humanité.",
+                    p_quran_text: "Muhammad n'a jamais été le père de l'un de vos hommes, mais le messager d'Allah et le dernier des prophètes. Allah est Omniscient.",
+                    p_quran_ref: "- Coran, Sourate Al-Ahzab (33:40)",
+                    p_p2: "Sa vie est considérée comme l'incarnation ultime des enseignements coraniques. Son caractère, son leadership et la société transformatrice qu'il a établie sont présentés comme une preuve de son authenticité. Accepter le message (le Coran), c'est accepter logiquement la crédibilité du messager qui l'a apporté.",
+                    p_summary_title: "Le Chemin Complet",
+                    p_summary_text: "La méthode GORAP présente une progression logique : L'univers pointe vers un <span class=\"font-bold text-cyan-700\">D</span>ieu (God). La logique dicte Son <span class=\"font-bold text-cyan-700\">U</span>nicité (Oneness). Sa miséricorde nécessite une <span class=\"font-bold text-cyan-700\">R</span>évélation. <span class=\"font-bold text-cyan-700\">E</span>t cette révélation requiert un messager, menant à la finalité de la <span class=\"font-bold text-cyan-700\">P</span>rophétie.",
+                    // FAQ
+                    faq_title: "Questions Fréquentes", faq_subtitle: "Clarifier les Idées Reçues",
+                    faq_q1: "L'Islam ordonne-t-il de tuer les 'infidèles' ?",
+                    faq_a1: "Ceci est une grave mauvaise interprétation. Les versets du Coran qui mentionnent le combat sont presque toujours dans le contexte de l'autodéfense contre une agression, une persécution ou une trahison de traités. Le Coran interdit explicitement de commencer les hostilités : 'Combattez dans le sentier d'Allah ceux qui vous combattent, et ne transgressez pas. Certes. Allah n'aime pas les transgresseurs' (2:190). De plus, il garantit la liberté de croyance : 'Nulle contrainte en religion !' (2:256). La règle générale est la paix, la justice et la coexistence respectueuse. Le contexte historique de ces versets est crucial et ne peut être ignoré.",
+                    faq_q2: "Qu'en est-il du mariage du Prophète Muhammad (ﷺ) avec Aïcha ?",
+                    faq_a2: "Cela doit être compris dans son contexte historique et culturel, et non à travers une lentille du 21e siècle. Les sources historiques indiquent qu'Aïcha (que Dieu soit satisfait d'elle) a été fiancée à un jeune âge, une pratique courante pour les alliances politiques et sociales à cette époque dans de nombreuses cultures. Cependant, le mariage n'a été consommé que lorsqu'elle a atteint la maturité physique et émotionnelle, comme l'indiquent les récits historiques et la loi islamique, qui font de la puberté et de la préparation au mariage les critères, pas seulement un chiffre. Aïcha était connue pour son intelligence vive, sa forte personnalité, et est devenue l'une des plus importantes savantes de l'Islam, enseignant à des milliers d'hommes et de femmes après la mort du Prophète. Son mariage fut heureux et aimant, et elle n'a jamais exprimé d'objection à son égard.",
+                    faq_q3: "Quelle est la vraie signification de 'Jihad' ?",
+                    faq_a3: "'Jihad' signifie littéralement 'lutter' ou 's'efforcer'. C'est un concept large à plusieurs niveaux. Le 'grand Jihad' est la lutte interne et personnelle pour être une meilleure personne — pour surmonter son ego, son avidité et sa colère, et pour vivre une vie juste. Le 'petit Jihad' fait référence à la lutte externe, qui peut inclure des choses comme s'efforcer de construire une société juste ou, dans des circonstances très spécifiques et restreintes, une lutte armée pour l'autodéfense. Ce n'est pas une 'guerre sainte' et est régi par des règles très strictes, y compris l'interdiction de nuire aux civils, de détruire des biens ou de forcer la conversion.",
+                    faq_q4: "Comment l'Islam traite-t-il les femmes ?",
+                    faq_a4: "L'Islam a considérablement élevé le statut des femmes au moment de sa révélation, leur accordant des droits qu'elles n'avaient pas, tels que le droit d'hériter, de posséder des biens, de consentir au mariage et de demander le divorce. Le Coran s'adresse aux hommes et aux femmes comme des égaux spirituels, avec les mêmes devoirs et les mêmes récompenses de Dieu. Bien que certaines pratiques culturelles dans les pays à majorité musulmane puissent opprimer les femmes, celles-ci contredisent souvent les véritables enseignements de l'Islam. Le hijab (foulard) est considéré par de nombreuses femmes musulmanes comme un choix personnel de dévotion et une libération des pressions sociales pour se conformer à des normes de beauté spécifiques.",
+                    // Resources
+                    resources_title: "Plus de Ressources", resources_subtitle: "Continuez Votre Voyage",
+                    resources_p1: "L'apprentissage est un voyage de toute une vie. Voici quelques ressources fiables et authentiques pour approfondir votre compréhension de l'Islam.",
+                    resources_d1: "Une interface belle et facile à utiliser pour lire, écouter et étudier le Coran, avec plusieurs traductions.",
+                    resources_d2: "Une organisation internationale dédiée à présenter un argumentaire rationnel et compatissant pour l'Islam.",
+                    resources_d3: "La collection en ligne la plus complète des Hadiths (traditions prophétiques), la deuxième source primaire de la loi islamique.",
+                    resources_d4: "Un projet du Cercle Islamique d'Amérique du Nord, fournissant des informations claires pour ceux qui sont curieux de l'Islam.",
+                    visit_website: "Visiter le site &rarr;",
+                    // Next Steps
+                    next_steps_title: "Prochaines Étapes ?", next_steps_subtitle: "Votre Voyage Continue Ici",
+                    next_steps_p1: "Si ce message résonne en vous, voici quelques étapes pratiques que vous pouvez suivre pour en savoir plus et vous connecter.",
+                    next_steps_h1: "Lisez le Coran", next_steps_d1: "Commencez à lire une traduction du Coran pour entendre le message directement. Commencez par de courtes sourates comme Al-Fatiha ou Al-Ikhlas.",
+                    next_steps_h2: "Visitez une Mosquée", next_steps_d2: "Les mosquées sont ouvertes aux visiteurs. C'est un excellent moyen de voir la communauté et de poser des questions. La plupart organisent des journées portes ouvertes ou accueillent les invités à tout moment.",
+                    find_mosque: "Trouver une mosquée &rarr;",
+                    next_steps_h3: "Regardez un Documentaire", next_steps_d3: "Découvrez la vie de l'homme qui a apporté ce message. 'La Vie du Prophète Muhammad' par la BBC est un bon point de départ.",
+                    watch_now: "Regarder &rarr;",
+                    next_steps_h4: "Parlez à un Musulman", next_steps_d4: "Ayez une conversation. Posez des questions. Entendre une perspective personnelle peut être incroyablement instructif. Utilisez les ressources ci-dessus pour vous connecter.",
+                    // Miracles
+                    miracles_title: "Miracles du Coran", miracles_subtitle: "Des Connaissances en Avance sur Leur Temps",
+                    miracles_p1: "Le Coran, révélé il y a plus de 1400 ans à un prophète illettré (ﷺ) dans le désert, contient des connaissances que la science n'a que récemment confirmées. Ceci est considéré par les musulmans comme un signe de son origine divine.",
+                    miracles_h1: "Embryologie", miracles_d1: "Le Coran (23:14) décrit les étapes du développement humain dans l'utérus, d'une 'adhérence' (`alaqah`) à la formation des os et de la chair, avec une précision qu'il était impossible de connaître sans la microscopie moderne.",
+                    miracles_h2: "Univers en Expansion", miracles_d2: "Le Coran (51:47) déclare : 'Le ciel, Nous l'avons construit avec force, et c'est Nous qui l'étendons'. Le concept d'un univers en expansion n'a été proposé et confirmé par les scientifiques qu'au 20e siècle.",
+                    miracles_h3: "Le Cycle de l'Eau", miracles_d3: "Plusieurs versets décrivent avec précision le cycle de l'eau — évaporation, formation des nuages et précipitations — à une époque où les théories dominantes étaient basées sur la superstition et le mythe.",
+                    // Glossary
+                    glossary_title: "Glossaire", glossary_subtitle: "Comprendre les Termes Clés",
+                    glossary_h1: "Tawhid", glossary_d1: "Le concept central de l'Islam : l'Unicité et l'Unicité absolues de Dieu.",
+                    glossary_h2: "Sunnah", glossary_d2: "Les enseignements, les pratiques et l'exemple vivant du Prophète Muhammad (ﷺ).",
+                    glossary_h3: "Hadith", glossary_d3: "Les récits enregistrés des paroles, des actions et des approbations du Prophète Muhammad (ﷺ). Ils sont une source principale pour comprendre la Sunnah.",
+                    glossary_h4: "Jihad", glossary_d4: "Littéralement 'lutter'. Le sens premier est la lutte intérieure pour devenir une meilleure personne. Ce n'est pas une 'guerre sainte'.",
+                    glossary_h5: "ﷺ", glossary_d5: "Une abréviation de \"Sallallahu 'alayhi wa sallam\", qui signifie \"Que la paix et les bénédictions d'Allah soient sur lui\". Une phrase de respect prononcée après avoir mentionné le Prophète Muhammad.",
+                }
+            };
+            
+            const faqData = {
+                en: [
+                    { q: "faq_q1", a: "faq_a1" },
+                    { q: "faq_q2", a: "faq_a2" },
+                    { q: "faq_q3", a: "faq_a3" },
+                    { q: "faq_q4", a: "faq_a4" },
+                ],
+                fr: [
+                    { q: "faq_q1", a: "faq_a1" },
+                    { q: "faq_q2", a: "faq_a2" },
+                    { q: "faq_q3", a: "faq_a3" },
+                    { q: "faq_q4", a: "faq_a4" },
+                ]
+            };
+
+            // --- INITIALIZATION ---
+            let currentLang = 'en';
+
+            const sections = document.querySelectorAll('.section');
+            const dots = document.querySelectorAll('.dot');
+            const langEnBtn = document.getElementById('lang-en');
+            const langFrBtn = document.getElementById('lang-fr');
+            const faqContainer = document.getElementById('faq-container');
+
+            // --- FUNCTIONS ---
+
+            // Function to build FAQ section
+            const buildFaq = (lang) => {
+                faqContainer.innerHTML = '';
+                faqData[lang].forEach(item => {
+                    const faqItem = document.createElement('div');
+                    faqItem.className = 'faq-item';
+                    faqItem.innerHTML = `
+                        <div class="faq-question">
+                            <span data-lang-key="${item.q}">${translations[lang][item.q]}</span>
+                            <span class="faq-arrow text-cyan-700 text-2xl">↓</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p data-lang-key="${item.a}">${translations[lang][item.a]}</p>
+                        </div>
+                    `;
+                    faqContainer.appendChild(faqItem);
+                });
+
+                // Re-add event listeners for the new FAQ items
+                document.querySelectorAll('.faq-question').forEach(question => {
+                    question.addEventListener('click', () => {
+                        const item = question.parentElement;
+                        item.classList.toggle('active');
+                    });
+                });
+            };
+
+            // Function to change language
+            const setLanguage = (lang) => {
+                if (currentLang === lang) return;
+                currentLang = lang;
+                
+                // Update text content
+                document.querySelectorAll('[data-lang-key]').forEach(el => {
+                    const key = el.getAttribute('data-lang-key');
+                    if (translations[lang] && translations[lang][key]) {
+                        el.innerHTML = translations[lang][key];
+                    }
+                });
+
+                // Update language buttons
+                langEnBtn.classList.toggle('active', lang === 'en');
+                langFrBtn.classList.toggle('active', lang === 'fr');
+                
+                // Rebuild FAQ for the new language
+                buildFaq(lang);
+            };
+
+            // Intersection Observer for nav dots
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.5
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const sectionId = entry.target.id;
+                        dots.forEach(dot => {
+                            dot.classList.remove('active');
+                            if (dot.getAttribute('data-section') === sectionId) {
+                                dot.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            // --- EVENT LISTENERS ---
+            langEnBtn.addEventListener('click', () => setLanguage('en'));
+            langFrBtn.addEventListener('click', () => setLanguage('fr'));
+
+            // --- INITIAL LOAD ---
+            buildFaq(currentLang);
+        });
+    </script>
+</body>
+</html>
